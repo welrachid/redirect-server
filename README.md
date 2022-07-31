@@ -42,7 +42,10 @@ If people keep adding removing domains, you can get into a position where your i
 
 ## WHY
 Many dns services offer to do a web-forward. Usually however this does not include SSL. The reasoning behind this is that since they are not hosting a webhotel for you, they cannot verify the domain with services like letsencrypt.
+
 When using a whitelabel domain with SaaS they usually ask you to make CNAME for a subdomain (typically WWW.example.com). Some DNS providers offer ANAME, but not all.
+
 When using whitelabel domains on subscription software usually the infrastructure is managed by the SaaS company. They do however not have access to your DNS and cannot change ip whenever they want.
+
 Therefore you might need a place to e able to change from non-www.example.com to www.example.com with SSL.
 
