@@ -12,6 +12,13 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 } else {
 	echo 'Domain: '.$_SERVER['SERVER_NAME'].' is not pointing to correct ip adr. Found: '.$domain_ip.'';
 }
+
+if($domain == $server_host_name){
+	echo "<pre>";
+	include("README.md");
+	echo "</pre>";
+}
+
 function createOrUpdateDomain($domains_dir, $domain){
 	$test1 = filter_var('http://'.$domain, FILTER_VALIDATE_URL);
 	$test2 = filter_var($domain, FILTER_VALIDATE_IP);

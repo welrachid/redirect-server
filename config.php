@@ -1,11 +1,13 @@
 <?php
 
+$server_host_name = 'redirect.notifierchatbot.com';
 $certbot_email = 'info@notifierchatbot.com';
+
+
 $public_html_non_ssl_dir_name = 'public_html_non_ssl';
 $public_html_ssl_dir_name = 'public_html_ssl';
 $apache_non_ssl_conf = '/etc/apache2/sites-available/non-ssl.conf';
 $apache_ssl_conf = '/etc/apache2/sites-available/ssl.conf';
-$server_host_name = 'redirect.notifierchatbot.com';
 $reload_apache_cmd = '/usr/sbin/apache2ctl -k graceful';
 $run_lock_file = 'run.lock';
 $cleanup_lock_file = 'cleanup.lock';
