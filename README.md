@@ -8,10 +8,7 @@ It will take any domain that is pointing towards it and is visited using http an
 
 Please note all of this is on your own risk. Should run on a FRESH installation. Reference server is running 512Ram and 1 CPU.
 ```
-apt-get install apache2
-```
-```
-apt-get install php7.4
+apt-get install -y apache2 php7.4
 ```
 ```
 cd /var/www
