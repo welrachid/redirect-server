@@ -18,7 +18,7 @@ rm * -R
 
 git clone https://github.com/welrachid/redirect-server .
 
-Edit the config.php and change $server_host_name and $certbot_email
+Create a new file config.live.php with your configs. Copy file from config.php to use as reference (Do not include the last bit that includes the config.live.php file)
 
 
 ## Config / Setup
@@ -27,6 +27,9 @@ This is built on a simple debian server with apache2 + php7.4 standard setup.
 Check the config.php file to see what settings you can look at
 
 You will need to add both run.php and cleanup.php to your cronjobs and run as root (They will issue certificate, delete certificate, restart apache2 and change enabled sites.)
+
+Example (will run on each minute of each day. It will cleanup first, and then run and generate new certificates.)
+echo '* * * * * cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/cron.d/redirect-server
 
 
 ## CLI
