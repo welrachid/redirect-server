@@ -7,16 +7,18 @@ It will take any domain that is pointing towards it and is visited using http an
 ## installation
 
 Please note all of this is on your own risk. Should run on a FRESH installation. Reference server is running 512Ram and 1 CPU.
-
-apt-get install apache2
-
-apt-get install php7.4
-
+```
+apt-get install -y apache2 php7.4
+```
+```
 cd /var/www
-
+```
+```
 rm * -R
-
+```
+```
 git clone https://github.com/welrachid/redirect-server .
+```
 
 Create a new file config.live.php with your configs. Copy file from config.php to use as reference (Do not include the last bit that includes the config.live.php file)
 
@@ -29,8 +31,9 @@ Check the config.php file to see what settings you can look at
 You will need to add both run.php and cleanup.php to your cronjobs and run as root (They will issue certificate, delete certificate, restart apache2 and change enabled sites.)
 
 Example (will run on each minute of each day. It will cleanup first, and then run and generate new certificates.)
+```
 echo '* * * * * cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/cron.d/redirect-server
-
+```
 
 ## CLI
 run.php looks into the domains directory of non-ssl public folder and finds all relevant domains to check if certificate already is issued. if not - then it attempts to issue new certificate.
