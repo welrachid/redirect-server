@@ -15,7 +15,7 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 
 if($domain == $server_host_name){
 	echo "<pre>";
-	include("README.md");
+	include("../README.md");
 	echo "</pre>";
 }
 

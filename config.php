@@ -19,3 +19,6 @@ $public_html_ssl_dir = $app_dir.$public_html_ssl_dir_name.DIRECTORY_SEPARATOR;
 
 // which ip addresses can generate a new domain to be handled. If left empty, anyone can
 $whitelist_ips = [];
+if(file_exists($app_dir.'config.live.php')){
+    include($app_dir.'config.live.php');
+}
