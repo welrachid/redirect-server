@@ -7,7 +7,7 @@ $domain = $_SERVER['SERVER_NAME'];
 $domain_ip = gethostbyname($domain);
 if($domain_ip == $_SERVER['SERVER_ADDR']){
 	// we need to check and create a file.
-	createOrUpdateDomain($domains_dir, $domain);
+	createOrUpdateDomain($domains_dir, $domain, $server_host_name);
 } else {
 	echo 'Domain: '.$_SERVER['SERVER_NAME'].' is not pointing to correct ip adr. Found: '.$domain_ip.'';
 }
@@ -27,7 +27,7 @@ if($domain == $server_host_name){
 	<?php 
 }
 
-function createOrUpdateDomain($domains_dir, $domain){
+function createOrUpdateDomain($domains_dir, $domain, $server_host_name){
 	$test1 = filter_var('http://'.$domain, FILTER_VALIDATE_URL);
 	$test2 = filter_var($domain, FILTER_VALIDATE_IP);
 	// possibly more filters?
@@ -45,6 +45,8 @@ function createOrUpdateDomain($domains_dir, $domain){
 		echo "OK - created";
 	} else {
 		echo "Redirecting..";
-		echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+		if($domain != $server_host_name){
+			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+		}
 	}
 }
