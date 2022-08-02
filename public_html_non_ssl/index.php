@@ -42,6 +42,6 @@ function createOrUpdateDomain($domains_dir, $domain){
 		echo "OK - created";
 	} else {
 		print "Redirecting..";
-		print "<meta http-equiv='refresh' content='2;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+		print "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
 	}
 }

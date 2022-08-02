@@ -32,7 +32,7 @@ You will need to add both run.php and cleanup.php to your cronjobs and run as ro
 
 Example (will run on each minute of each day. It will cleanup first, and then run and generate new certificates.)
 ```
-echo '* * * * * cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/cron.d/redirect-server
+echo '* * * * * root cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/cron.d/redirect-server
 ```
 
 ## CLI
