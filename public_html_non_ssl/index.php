@@ -44,8 +44,8 @@ function createOrUpdateDomain($domains_dir, $domain, $server_host_name){
 		file_put_contents($file,$_SERVER['REMOTE_ADDR']);
 		echo "OK - created";
 	} else {
-		echo "Redirecting..";
 		if($domain != $server_host_name){
+			echo "Redirecting..";
 			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
 		}
 	}
