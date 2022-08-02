@@ -1,7 +1,6 @@
 <?php
 include("../config.php");
 if(!empty($whitelist_ips) && !in_array($_SERVER['REMOTE_ADDR'],$whitelist_ips)){
-	//
 	exit("NOT ALLOWED");
 }
 $domain = $_SERVER['SERVER_NAME'];
@@ -33,7 +32,11 @@ function createOrUpdateDomain($domains_dir, $domain){
 	$test2 = filter_var($domain, FILTER_VALIDATE_IP);
 	// possibly more filters?
 	if($test1 === false || $test2 !== false){
-		print "NOT VALID ".$domain;
+		echo "NOT VALID ".$domain;
+		return;
+	}
+	if(mb_substr(mb_strtolower($domain),0,4) == 'www.'){
+		echo "NOT VALID ".$domain;
 		return;
 	}
 	$file = $domains_dir.DIRECTORY_SEPARATOR.escapeshellcmd($domain);
@@ -41,7 +44,7 @@ function createOrUpdateDomain($domains_dir, $domain){
 		file_put_contents($file,$_SERVER['REMOTE_ADDR']);
 		echo "OK - created";
 	} else {
-		print "Redirecting..";
-		print "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+		echo "Redirecting..";
+		echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
 	}
 }
