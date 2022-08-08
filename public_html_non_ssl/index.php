@@ -1,13 +1,24 @@
 <?php
 include("../config.php");
-if(!empty($whitelist_ips) && !in_array($_SERVER['REMOTE_ADDR'],$whitelist_ips)){
-	exit("NOT ALLOWED");
-}
 $domain = $_SERVER['SERVER_NAME'];
 $domain_ip = gethostbyname($domain);
 if($domain_ip == $_SERVER['SERVER_ADDR']){
-	// we need to check and create a file.
-	createOrUpdateDomain($domains_dir, $domain, $server_host_name);
+
+	$result=['code'=>'NOT_OK', 'message'=>'not valid'];
+	$result = createOrUpdateDomain($domains_dir, $domain, $server_host_name,$whitelist_ips);
+
+	if($result['code'] == 'OK'){
+		if($result['redirect']){
+			echo "Redirecting..";
+			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+			exit();
+		} else {
+			echo $result['message'];
+			exit();
+		}
+	} else {
+		echo $result['message'];
+	}
 } else {
 	echo 'Domain: '.$_SERVER['SERVER_NAME'].' is not pointing to correct ip adr. Found: '.$domain_ip.'';
 }
@@ -27,26 +38,28 @@ if($domain == $server_host_name){
 	<?php 
 }
 
-function createOrUpdateDomain($domains_dir, $domain, $server_host_name){
+function createOrUpdateDomain($domains_dir, $domain, $server_host_name,$whitelist_ips): array {
 	$test1 = filter_var('http://'.$domain, FILTER_VALIDATE_URL);
 	$test2 = filter_var($domain, FILTER_VALIDATE_IP);
 	// possibly more filters?
 	if($test1 === false || $test2 !== false){
-		echo "NOT VALID ".$domain;
-		return;
+		return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'Not valid domain: '.$domain];
 	}
 	if(mb_substr(mb_strtolower($domain),0,4) == 'www.'){
-		echo "NOT VALID ".$domain;
-		return;
+		return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'Not valid domain: '.$domain];
 	}
 	$file = $domains_dir.DIRECTORY_SEPARATOR.escapeshellcmd($domain);
 	if(!file_exists($file)){
-		file_put_contents($file,$_SERVER['REMOTE_ADDR']);
-		echo "OK - created";
-	} else {
-		if($domain != $server_host_name){
-			echo "Redirecting..";
-			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+		if(empty($whitelist_ips) || in_array($_SERVER['REMOTE_ADDR'],$whitelist_ips)){
+			file_put_contents($file,$_SERVER['REMOTE_ADDR']);
+			return ['code' => 'OK', 'redirect' => false, 'message' => 'Created'];
+		} else {
+			return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'You are not allowed to create new hosts on this server'];
 		}
 	}
+
+	if($domain == $server_host_name){
+		return ['code' => 'OK', 'redirect' => false, 'message' => 'Application info'];
+	}
+	return ['code' => 'OK', 'redirect' => true, 'message' => 'already created'];
 }
