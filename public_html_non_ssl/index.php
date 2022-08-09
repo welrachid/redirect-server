@@ -45,7 +45,7 @@ function createOrUpdateDomain($domains_dir, $domain, $server_host_name,$whitelis
 	if($test1 === false || $test2 !== false){
 		return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'Not valid domain: '.$domain];
 	}
-	if(mb_substr(mb_strtolower($domain),0,4) == 'www.'){
+	if(substr(strtolower($domain),0,4) == 'www.'){
 		return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'Not valid domain: '.$domain];
 	}
 	$file = $domains_dir.DIRECTORY_SEPARATOR.escapeshellcmd($domain);

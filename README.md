@@ -8,7 +8,7 @@ It will take any domain that is pointing towards it and is visited using http an
 
 Please note all of this is on your own risk. Should run on a FRESH installation. Reference server is running 512Ram and 1 CPU.
 ```
-apt-get install -y apache2 php7.4
+apt-get update && apt-get install -y git apache2 php7.4 certbot
 ```
 ```
 cd /var/www
@@ -33,6 +33,14 @@ You will need to add both run.php and cleanup.php to your cronjobs and run as ro
 Example (will run on each minute of each day. It will cleanup first, and then run and generate new certificates.)
 ```
 echo '* * * * * root cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/cron.d/redirect-server
+```
+
+
+```
+cd /var/www/cli/ && php cleanup.php && php run.php
+a2dissite 000-default
+a2ensite ssl non-ssl
+systemctl reload apache2
 ```
 
 ## CLI
