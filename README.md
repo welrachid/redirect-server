@@ -37,6 +37,8 @@ echo '* * * * * root cd /var/www/cli/ && php cleanup.php && php run.php' > /etc/
 
 
 ```
+a2enmod ssl
+systemctl reload apache2
 cd /var/www/cli/ && php cleanup.php && php run.php
 a2dissite 000-default
 a2ensite ssl non-ssl

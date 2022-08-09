@@ -13,7 +13,20 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
 			exit();
 		} else {
-			echo $result['message'];
+		?>
+			<h3>Redirect-server</h3>
+			<a href="https://github.com/welrachid/redirect-server/">Github repo</a><br>
+			
+			<p>To use this service, just create an A-record in your DNS panel and point it to <?php echo gethostbyname($server_host_name);?></p>
+			<p>Once it works visit your domain and you should see a message stating its created or it already exists</p>
+			<p>Wait a couple of minutes and we will issue a new certificate for you</p>
+
+			<pre>
+				<?php include("../README.md"); ?>
+			</pre>
+		<?php
+
+
 			exit();
 		}
 	} else {
@@ -23,20 +36,6 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 	echo 'Domain: '.$_SERVER['SERVER_NAME'].' is not pointing to correct ip adr. Found: '.$domain_ip.'';
 }
 
-if($domain == $server_host_name){
-	?>
-	<h3>Redirect-server</h3>
-	<a href="https://github.com/welrachid/redirect-server/">Github repo</a><br>
-	
-	<p>To use this service, just create an A-record in your DNS panel and point it to <?php echo gethostbyname($server_host_name);?></p>
-	<p>Once it works visit your domain and you should see a message stating its created or it already exists</p>
-	<p>Wait a couple of minutes and we will issue a new certificate for you</p>
-
-	<pre>
-		<?php include("../README.md"); ?>
-	</pre>
-	<?php 
-}
 
 function createOrUpdateDomain($domains_dir, $domain, $server_host_name,$whitelist_ips): array {
 	$test1 = filter_var('http://'.$domain, FILTER_VALIDATE_URL);
