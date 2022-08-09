@@ -9,8 +9,9 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 
 	if($result['code'] == 'OK'){
 		if($result['redirect']){
+			echo $result['message']."<br>";
 			echo "Redirecting..";
-			echo "<meta http-equiv='refresh' content='1;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+			echo "<meta http-equiv='refresh' content='2;url=http://www.".$_SERVER['SERVER_NAME']."' />";
 			exit();
 		} else {
 		?>
@@ -25,7 +26,6 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 				<?php include("../README.md"); ?>
 			</pre>
 		<?php
-
 
 			exit();
 		}
@@ -51,7 +51,7 @@ function createOrUpdateDomain($domains_dir, $domain, $server_host_name,$whitelis
 	if(!file_exists($file)){
 		if(empty($whitelist_ips) || in_array($_SERVER['REMOTE_ADDR'],$whitelist_ips)){
 			file_put_contents($file,$_SERVER['REMOTE_ADDR']);
-			return ['code' => 'OK', 'redirect' => false, 'message' => 'Created'];
+			return ['code' => 'OK', 'redirect' => true, 'message' => 'Created'];
 		} else {
 			return ['code' => 'NOT_VALID', 'redirect' => false, 'message' => 'You are not allowed to create new hosts on this server'];
 		}
