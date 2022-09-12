@@ -9,9 +9,13 @@ if($domain_ip == $_SERVER['SERVER_ADDR']){
 
 	if($result['code'] == 'OK'){
 		if($result['redirect']){
-			echo $result['message']."<br>";
-			echo "Redirecting..";
-			echo "<meta http-equiv='refresh' content='2;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+			if(isset($_GET['show_msg']) && $_GET['show_msg'] == 1){
+				echo $result['message']."<br>";
+				echo "Redirecting..";
+				echo "<meta http-equiv='refresh' content='2;url=http://www.".$_SERVER['SERVER_NAME']."' />";
+			} else {
+				header("Location: http://www.".$_SERVER['SERVER_NAME']);
+			}
 			exit();
 		} else {
 		?>
